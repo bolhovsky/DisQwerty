@@ -1,0 +1,56 @@
+
+            table {
+                font-size: 100%;
+                width: 50%;
+            }
+            td {
+                
+                border: 1px black solid;
+            text-align: center;    
+            
+            
+            }
+            #chooseButton {
+           right: 0px;
+           height: 86%;
+           width: 40%;
+           position: absolute;
+                border: 10px black solid;
+                
+                margin-top: 0px;
+            }
+            #inputBox {
+                border: 1px black solid;
+                font-size: 30px;
+                min-height:  30px;
+                margin-bottom: 5px;
+                width: 57%;
+                word-wrap: break-word;
+            }
+            #settings{
+                display: none;
+                background: white;
+                position: absolute;
+                bottom: 9%;
+                right: 0px;
+                z-index: 5;
+                border: 1px solid black;
+            }
+            #settingsButton{
+               right:   0px;
+               bottom: 0px;
+               position: absolute;
+               margin-top: 0px;
+               height: 10%;
+            }
+            #settingsBack{
+                opacity: 1;
+                height: 120%;
+                width: 100%;
+                position: absolute;
+                left:0;
+                bottom: 0;
+                top: 0;
+             z-index: 4;   
+             display: none;
+            }
