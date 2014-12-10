@@ -1,0 +1,61 @@
+oldList=[] /*"старый" лист слов, если мы выбираем форму*/, sublib=false /*выбор формы слова*/;
+
+//функция при нажатии кнопки выбрать
+choose=function(){
+// nowChoose: true выбор в строке. false - выбор строки
+if (!nowChoose){
+// обнуляем выдыление строки
+    trs[nowRow].style.background="#FFF";   
+         trs[nowRow].style.color="#000";   
+nowChoose   =true; // будем выбирать кнопку в стркое
+}
+    else { // выбрана кнопка
+     nowChoose=false; // опять будем выбирать строку
+        nowTr=trs[nowRow]; // выбранная строка занесена в переменную
+        nowTr.childNodes[nowButton].style.background="inherit";   
+         nowTr.childNodes[nowButton].style.color="inherit";   
+        outMessage=words[nowRow][nowButton]; // записали выбранное в переменную
+        nowRow=(outMessage==="^")?nowRow:0; // обнулили текущую строку, если выбран знак выхода ^, то не обнуляем а записываем текущую строку
+        nowButton=0;//ну и обнуляем выбранную кнопку
+            switch(outMessage)
+                                   {
+                                           case "^":
+                                           //ничего не делаем
+                                           break;
+                                           case "||":// кнопка выхода из словоря форм
+                                           loadwords(oldList,true) //грузим старый лист слов
+                                               sublib=false;
+                                           break;
+                                           case "@"://кнопка которая читает написанное
+                                           say($("out").innerHTML);
+                                           break;
+                                           case "#": // удаляет всё
+                                        $("out").innerHTML="";
+                                           break;
+                                           case "<-":       //последний символ
+            $("out").innerHTML=$("out").innerHTML.substr(0,$("out").innerHTML.length-1) ;
+                                           break;
+        case "<=": // последнее слово
+                        $("out").innerHTML=$("out").innerHTML.substring(0, $("out").innerHTML.substr(0,$("out").innerHTML.length-1).lastIndexOf(" "))+" ";
+                                           break;
+                                       default: //выбранно слово
+            forms=(!sublib)?getWordForms(outMessage.substr(0,outMessage.lastIndexOf(" "))):false;  //загружаем формы если мы не в под-словаре ()                    
+                                           if (sublib) { // если в подсловаре, добавляем слово в аут и произносим
+                                               say($("out").innerHTML+=outMessage);
+                                               loadwords(oldList,true); //грузим старый словарь
+                                               sublib=false;
+                                           }
+                                           else{
+    if (forms&&forms.length>1){ // если вернулись формы и их больше одной - открываем выбор из них
+        sublib=true;
+                                           loadwords(forms);
+    }
+                                           else{ // если нет - добавляет слово в аут
+                                               say($("out").innerHTML+=outMessage);
+                                           }
+                                           }
+                                   break;
+                                   }
+        
+    }
+}

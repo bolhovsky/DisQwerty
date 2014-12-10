@@ -1,0 +1,22 @@
+//вешаем евенты
+
+//на кнопку настроек
+$("settingsButton").onclick=function (){
+ $("settings").style.display = ($("settings").style.display==="none")?"block":"none";
+}
+//на кнопку загрузки слов
+$("loadwordsButton").onclick=function(){
+    var words=$("wordsframe").contentDocument.getElementsByTagName('pre')[0].innerText.split("&").map(function(el) {return el+" "}); // получаем солва из фрейма
+
+    
+    loadwords(words, true);
+}
+$("startStopButton").onclick=function(){
+window.localStorage.timeout=$("timeoutInput").value;
+    timeout=window.localStorage.timeout*1000;
+    startStop();   
+}
+
+$("selectButton").onclick=function(){
+ choose();   
+}
