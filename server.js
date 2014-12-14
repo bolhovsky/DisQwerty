@@ -12,9 +12,7 @@ http.createServer(function (req, res) {
 var url_parts = url.parse(req.url, true);
 var query = url_parts.query;
 var filename=(process.cwd()+decodeURI(url_parts.pathname));
-    
-    if (fs.existsSync(filename)){
-        if (query.q){
+    if (query.q){
             switch (url_parts.pathname){
              case "/library/":
                 letters = getLetters(query.q);
@@ -36,28 +34,17 @@ var filename=(process.cwd()+decodeURI(url_parts.pathname));
  
             }
         }
+    else{
+        if (fs.lstatSync(filename).isDirectory()) filename+="/index.html";
+    fs.exists(filename, function(exist){
+       if (exist){
+           res.writeHead(200, {'Content-Type': require('mime').lookup(filename)})
+           fs.createReadStream(filename).pipe(res);
+       }
         else{
-        if (fs.lstatSync(filename).isDirectory()){
-         if (fs.existsSync(filename+"/index.html")) filename+="/index.html";   
-            else{
-             files=fs.readdirSync(filename);
-      
-                content="<ul>"
-                for (file in files){
-                   
-                    content+="<li><a href='"+files[file]+"'>"+files[file]+"</a></li>";
-                }
-                content+="</ul>";
-            }
+         res.writeHead(404);   
         }
-        if (content)           res.writeHead(200, {'Content-Type': 'text/html'});
-     res.end(content||fs.readFileSync(filename));   
-        }
-    }
-    else {
-        res.writeHead(404);
-     res.end()   ;
-        
+    });
     }
 }).listen(port);
 

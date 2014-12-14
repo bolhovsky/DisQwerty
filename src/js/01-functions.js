@@ -31,7 +31,7 @@ new Audio("http://127.0.0.1:8888/say/?q="+text).play();*/
 // получаем формы слова по начальной (см. server.js)
 getWordForms =function(word){
     console.log(word);
-  ret=jQuery.ajax("http://127.0.0.1:8888/library/", {async:false, data:
+  ret=jQuery.ajax("/library/", {async:false, data:
                                             {q:word}
                                            }
   ).responseText;
