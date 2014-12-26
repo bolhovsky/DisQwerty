@@ -66,4 +66,3 @@ getLetters = function(part){
      return false;   
     }
 }
-console.log("Программа запущенна. Откройте http://127.0.0.1:"+port)
