@@ -35,9 +35,9 @@ var filename=(process.cwd()+decodeURI(url_parts.pathname));
             }
         }
     else{
-        if (fs.lstatSync(filename).isDirectory()) filename+="/index.html";
     fs.exists(filename, function(exist){
        if (exist){
+        if (fs.lstatSync(filename).isDirectory()) filename+="/index.html";
            res.writeHead(200, {'Content-Type': require('mime').lookup(filename)})
            fs.createReadStream(filename).pipe(res);
        }
